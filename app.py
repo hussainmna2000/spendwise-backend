@@ -145,6 +145,12 @@ def compute_analytics(txn_list: list) -> dict:
 # Routes
 # ---------------------------------------------------------------------------
 
+@app.route("/", methods=["GET"])
+def root():
+    """Provide a simple response for platforms using the default root health check."""
+    return jsonify({"status": "ok", "service": "SpendWise AI Flask Backend"})
+
+
 @app.route("/api/health", methods=["GET"])
 def health():
     return jsonify({

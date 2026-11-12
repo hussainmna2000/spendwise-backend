@@ -50,7 +50,7 @@ The server will be available at **http://localhost:5000**.
 | `GROQ_MODEL`    | Groq model ID (default: `openai/gpt-oss-120b`) | No       |
 | `FLASK_ENV`     | `development` or `production`                   | No       |
 | `FLASK_DEBUG`   | `1` = debug mode on, `0` = off                  | No       |
-| `PORT`          | Port to listen on (default: `5000`)             | No       |
+| `PORT`          | Port to listen on (Render supplies this; local default: `5000`) | No |
 | `CORS_ORIGINS`  | Comma-separated allowed frontend origins        | No       |
 
 > **Important:** `GROQ_API_KEY` is required for the `/api/chat` endpoint to work. Without it the endpoint returns a helpful error message. The API uses an in-memory demo dataset; data resets when the process restarts.
@@ -101,11 +101,17 @@ The server will be available at **http://localhost:5000**.
 
 ---
 
+## Render deployment
+
+The repository includes `render.yaml` and `gunicorn.conf.py`. The Gunicorn configuration binds to `0.0.0.0:$PORT`, including when a Render service uses the short `gunicorn app:app` start command. The root `/` and `/api/health` paths both return a successful health response.
+
 ## Project Structure
 
 ```
 backend/
 ├── app.py              ← Main Flask application
+├── gunicorn.conf.py    ← Render host/port defaults
+├── render.yaml         ← Render Blueprint configuration
 ├── requirements.txt    ← Python dependencies
 ├── .env                ← Local environment variables (not committed)
 ├── .env.example        ← Environment variable template
